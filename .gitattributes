@@ -1,0 +1,2 @@
+# Shell scripts with CRLF break bash (Git Bash on Windows included).
+* text=auto eol=lf
