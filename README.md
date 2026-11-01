@@ -34,7 +34,7 @@ Requirements: `bash` (Git Bash on Windows) and `node` (hooks parse JSON with `jq
 | `hooks/` + `settings.harness.json` | `~/.claude/hooks/`, `settings.json` | Auto-format and the guard (below) |
 
 ### Hooks
-- `guard.sh` (PreToolUse on `Bash|PowerShell|Read`) blocks: `git push`, `--no-verify` /
+- `guard.sh` (PreToolUse on `Bash|PowerShell|Read`) blocks: force-push / `+refspec` / remote deletes, `--no-verify` /
   `commit -n`, `reset --hard`, `clean -f`, `checkout`/`restore` over the whole tree,
   `branch -D`, `stash clear`, any other `--force`, recursive deletes of `/`, `~`, a drive or `.`,
   and reading or staging `.env*` (except `.env.example` and friends), keys and `secrets/`.

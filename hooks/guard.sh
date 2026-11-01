@@ -60,7 +60,15 @@ check_git() { # $@ = words after "git"
   done
 
   case "$sub" in
-    push) block "git push is done by the user" ;;
+    push)
+      # A plain push is allowed (the standard requires an explicit request in chat); history rewrites and remote deletes are not.
+      { [ $has_force -eq 1 ] || [ $has_short_f -eq 1 ]; } && block "force-push"
+      for w in "${args[@]}"; do
+        case "$w" in
+          +*) block "force-push via +refspec ($w)" ;;
+          :*|--delete|-d|--mirror|--prune) block "deleting remote refs ($w)" ;;
+        esac
+      done ;;
     commit | merge | rebase | cherry-pick | am)
       [ "$sub" = commit ] && [ $has_short_n -eq 1 ] && block "skipping hooks (git commit -n)" ;;
     reset)
@@ -89,6 +97,16 @@ check_git() { # $@ = words after "git"
     add)
       for w in "${args[@]}"; do is_secret_path "$w" && block "staging a secrets file ($w)"; done ;;
     rm | mv | fetch) ;; # -f here does not rewrite history or drop work
+    worktree)
+      # Removing a throwaway worktree under a temp/scratchpad dir loses nothing worth keeping;
+      # forcing it anywhere else can drop uncommitted work.
+      if [ $has_force -eq 1 ] || [ $has_short_f -eq 1 ]; then
+        local scratch=0
+        for w in "${args[@]}"; do
+          case "$w" in *[Tt]emp/*|*[Tt]emp\\*|*scratchpad*|/tmp/*) scratch=1 ;; esac
+        done
+        [ $scratch -eq 0 ] && block "forced git worktree operation outside a temp dir"
+      fi ;;
     *)
       [ $has_force -eq 1 ] && block "forced git operation" ;;
   esac
@@ -142,7 +160,7 @@ check_segment() {
 fields="$(json_get tool_name tool_input.file_path tool_input.command)" || {
   # No JSON parser at all: fall back to a coarse scan of the raw input.
   case "$HOOK_INPUT" in
-    *"git push"*) block "git push is done by the user" ;;
+    *"git push"*"--force"*|*"git push"*" -f"*) block "force-push" ;;
     *"--no-verify"*) block "skipping hooks (--no-verify)" ;;
     *"reset --hard"*) block "git reset --hard can lose work" ;;
   esac
