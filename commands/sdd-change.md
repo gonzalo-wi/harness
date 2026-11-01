@@ -3,6 +3,8 @@ description: SDD · New requirement - spec first, code later
 argument-hint: <NNN-name> <requirement>
 arguments: [spec]
 ---
+Path rule: `$spec` names a folder inside `specs/`. If it already starts with `specs/` (or is an absolute path), use it as is; never write `specs/specs/`.
+
 New requirement for `specs/$spec/` (the first word is the folder, the rest is the requirement): $ARGUMENTS
 
 DON'T touch code. Use the sdd skill.
