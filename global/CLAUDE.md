@@ -29,7 +29,8 @@ if it contradicts something here, the project wins.
 - ✅ Always: run the project's test/lint commands from `CLAUDE.md` before closing a task.
 - ⚠️ Ask first: new dependencies, schema or persisted-data format changes,
   public API changes, deleting files.
-- 🚫 Never: `git push`, `--force`, skipping hooks (`--no-verify`), disabling or deleting tests to make them pass.
+- ⚠️ `git push` only when I explicitly ask for it in the chat, and only the branch I name (default: current branch).
+- 🚫 Never: `--force` / force-push, skipping hooks (`--no-verify`), disabling or deleting tests to make them pass.
 
 ## Language and style
 - Code, names, commits and code comments in English.
