@@ -1,12 +1,14 @@
 {
   "permissions": {
     "deny": [
-      "Bash(git push:*)",
-      "PowerShell(git push:*)",
       "Read(./.env)",
       "Read(./**/.env)",
       "Read(./**/*.pem)",
       "Read(./**/secrets/**)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "PowerShell(git push:*)"
     ]
   },
   "hooks": {
@@ -14,7 +16,10 @@
       {
         "matcher": "Bash|PowerShell|Read",
         "hooks": [
-          { "type": "command", "command": "bash \"$HOME/.claude/hooks/guard.sh\"" }
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/guard.sh\""
+          }
         ]
       }
     ],
@@ -22,7 +27,10 @@
       {
         "matcher": "Edit|Write|MultiEdit",
         "hooks": [
-          { "type": "command", "command": "bash \"$HOME/.claude/hooks/format.sh\"" }
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/format.sh\""
+          }
         ]
       }
     ]
