@@ -23,12 +23,15 @@ expect() { # expect <block|allow> <tool> <command-or-path>
 }
 
 # Must block
-expect block Bash 'git push'
+expect block Bash 'git push --force origin main'
 expect block Bash 'git push --force-with-lease origin main'
-expect block Bash 'npm test && git push'
-expect block Bash 'git -C ../repo push'
-expect block PowerShell 'git push origin main'
-expect block PowerShell 'Set-Location x; git push'
+expect block Bash 'git push -f'
+expect block Bash 'git push origin +main'
+expect block Bash 'git push origin --delete feature'
+expect block Bash 'git push origin :feature'
+expect block PowerShell 'git push --force origin main'
+expect block Bash 'git worktree remove --force ../other-checkout'
+expect block Bash 'git worktree remove -f /c/Users/me/proj-wt'
 expect block Bash 'git commit -m "wip" --no-verify'
 expect block Bash 'git commit -nm "wip"'
 expect block Bash 'git reset --hard HEAD~1'
@@ -56,6 +59,12 @@ expect block Read '/home/me/.ssh/id_rsa'
 expect block Read '/proj/certs/server.pem'
 
 # Must allow
+expect allow Bash 'git push'
+expect allow Bash 'npm test && git push origin main'
+expect allow PowerShell 'git push origin main'
+expect allow Bash 'git worktree remove --force /tmp/verify-wt'
+expect allow Bash 'git worktree remove --force "C:/Users/me/AppData/Local/Temp/claude/x/scratchpad/lint"'
+expect allow Bash 'git worktree remove ../clean-wt'
 expect allow Bash 'grep -rn "git push" docs/'
 expect allow Bash 'git commit -m "feat: allow push notifications"'
 expect allow Bash 'git status && git diff'
