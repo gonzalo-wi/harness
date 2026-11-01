@@ -3,6 +3,8 @@ description: SDD · Interviews me and generates the spec
 argument-hint: <NNN-name> <initial idea>
 arguments: [spec]
 ---
+Path rule: `$spec` names a folder inside `specs/`. If it already starts with `specs/` (or is an absolute path), use it as is; never write `specs/specs/`.
+
 DON'T write code. Read `docs/constitution.md` and `MEMORY.md`, and use the sdd skill.
 
 Spec folder: `specs/$spec/` (if `$spec` has no NNN number, use the next free one in `specs/`).

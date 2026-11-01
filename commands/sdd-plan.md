@@ -3,6 +3,8 @@ description: SDD · Generates the technical plan of an approved spec
 argument-hint: <NNN-name>
 arguments: [spec]
 ---
+Path rule: `$spec` names a folder inside `specs/`. If it already starts with `specs/` (or is an absolute path), use it as is; never write `specs/specs/`.
+
 Read `docs/constitution.md`, `CLAUDE.md` and `specs/$spec/spec.md`. Use the sdd skill. DON'T write code.
 
 If the spec isn't in "Status: approved" or has `[NEEDS CLARIFICATION]`, stop and tell me.
