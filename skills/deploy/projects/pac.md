@@ -17,15 +17,20 @@ Repos (local): backend `~/Documents/Proyectos/pac/pac` (gonzalo-wi/BackendPAC, n
   - backend ← `~/Documents/Proyectos/pac/pac/.env`: `DB_*` (Postgres 192.168.0.160, the same
     development database Loop uses), `URL_BASE_MINIBANK`, `URL_BASE_AGUAS`,
     `URL_BASE_AGUAS_COBRANZA`, `BANK_*`, `USERNAME_/PASSWORD_MINIBANK`, `RABBITMQ_*`
-    (192.168.0.55:5673).
-  - frontend ← `~/Documents/Proyectos/NewPacFront/.env`: `VITE_OPENAI_API_KEY` (baked into the
-    bundle and visible in the browser; accepted for homologación, FrontendPAC#6).
+    (192.168.0.55:5673), `OPENAI_API_KEY` and `URL_BASE_COMPROBANTES=http://192.168.0.58` (receipt
+    AI reading, spec 007; without them `POST /api/receipts/{id}/ai-reading` answers 503).
+  - frontend: no secrets since spec 007 (the OpenAI key moved to the backend). Never put a secret
+    in a `VITE_*` var: Vite bakes it into the bundle.
 - Deploy files are in `main` of both repos: backend `docker-compose.deploy.yml` + `.dockerignore`,
   frontend `Dockerfile`, `deploy/nginx.conf.template`, `docker-compose.yml`. Deploy `origin/main`
   (`git archive origin/main`) unless the user asks to test unmerged branches; then merge them into a
   local throwaway `deploy/homologacion` branch and never push it.
 
 ## PAC-specific checks
+- Receipt AI reading: `POST /api/receipts/999999999/ai-reading` through the front (:8098) must
+  answer 404 "Comprobante no encontrado" (503 = key or receipts URL missing). A real id costs one
+  OpenAI call; the bundle must not contain `api.openai.com`.
+- The guard hook blocks any command that names `.env`, even `grep -c`: verify config by behavior.
 - Backend runs in Argentine time (`PacTime.ZONE`); the API's `lastSuccessAt` must match local time.
 - `GET /api/integrations/status` lists the 4 Minibank cashiers (and Aguas rows after a plant refresh).
 - Schema changes run with Flyway on startup (spec 006): migrations in
