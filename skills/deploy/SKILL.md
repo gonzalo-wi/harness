@@ -70,4 +70,9 @@ Busy ports come from two sources: `ss -tln` (includes host-network containers, w
 - A Dockerfile must COPY everything the build reads (e.g. Checkstyle `config/` in PAC).
 - The build context ships the whole folder: keep `.env` in `.dockerignore`.
 - Old rows written with another zone/clock can look "in the future" to newest-wins logic.
+- Stacked PRs (deploy branch based on a feature branch): if the base PR is merged first and the
+  stacked PR is then merged into its old base, its commits never reach `main`. Open deploy changes
+  against `main`, or retarget/rebase the stacked PR right after the base merges, and check with
+  `git merge-base --is-ancestor <commit> origin/main` before saying a change is in main.
+- Push everything before the user merges a PR: commits pushed after the merge stay out of main.
 - Build logs: filter with a script (`--progress=plain 2>&1 | grep -E "ERROR|BUILD"`), not inline.
