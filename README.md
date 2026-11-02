@@ -29,6 +29,7 @@ Requirements: `bash` (Git Bash on Windows) and `node` (hooks parse JSON with `jq
 | `global/CLAUDE.md` | `~/.claude/CLAUDE.md` | Standard that applies to every project |
 | `skills/sdd/` | `~/.claude/skills/sdd/` | SDD flow + templates (spec, constitution, CLAUDE.md, MEMORY.md) |
 | `skills/stack-*/` | `~/.claude/skills/` | Per-language rules; loaded automatically by their description |
+| `skills/deploy/` | `~/.claude/skills/deploy/` | Deploys to the shared Docker server (pac-server): access, ports, steps, one file per project (PAC, Loop) |
 | `agents/` | `~/.claude/agents/` | `planner`, `implementer`, `reviewer` |
 | `commands/` | `~/.claude/commands/` | `/sdd-*`, `/feature` |
 | `hooks/` + `settings.harness.json` | `~/.claude/hooks/`, `settings.json` | Auto-format and the guard (below) |
