@@ -3,7 +3,7 @@
 Repos (local): backend `~/Documents/Proyectos/pac/pac` (gonzalo-wi/BackendPAC, never push to the
 `hercules` remote), frontend `~/Documents/Proyectos/NewPacFront` (gonzalo-wi/FrontendPAC).
 
-## Homologación (first deploy 2026-11-01)
+## Homologación (first deploy 2026-11-01, running `main` since 2026-11-02)
 | Part | Server folder | Compose | Port | Container |
 |---|---|---|---|---|
 | Backend | `/opt/apps/pac/homologacion/backend` | `docker-compose.deploy.yml` | 8097 (host network) | `pac-api-homologacion` |
@@ -20,14 +20,18 @@ Repos (local): backend `~/Documents/Proyectos/pac/pac` (gonzalo-wi/BackendPAC, n
     (192.168.0.55:5673).
   - frontend ← `~/Documents/Proyectos/NewPacFront/.env`: `VITE_OPENAI_API_KEY` (baked into the
     bundle and visible in the browser; accepted for homologación, FrontendPAC#6).
-- The deploy files live in branches `chore/deploy-homologacion` (backend) and `chore/docker-deploy`
-  (frontend) until merged.
+- Deploy files are in `main` of both repos: backend `docker-compose.deploy.yml` + `.dockerignore`,
+  frontend `Dockerfile`, `deploy/nginx.conf.template`, `docker-compose.yml`. Deploy `origin/main`
+  (`git archive origin/main`) unless the user asks to test unmerged branches; then merge them into a
+  local throwaway `deploy/homologacion` branch and never push it.
 
 ## PAC-specific checks
 - Backend runs in Argentine time (`PacTime.ZONE`); the API's `lastSuccessAt` must match local time.
 - `GET /api/integrations/status` lists the 4 Minibank cashiers (and Aguas rows after a plant refresh).
-- Schema changes have no Flyway yet (BackendPAC#15): the SQL in the spec's plan is run by hand on
-  the database **before** deploying the backend.
+- Schema changes run with Flyway on startup (spec 006): migrations in
+  `src/main/resources/db/migration`, history table `public.pac_flyway_schema_history` in database
+  `pac_db` (PostgreSQL 16, separate from Loop's database). Check the startup log for
+  "Successfully validated" / "up to date" or the applied version; a failed migration stops startup.
 - Only one PAC instance should write to the shared database at a time with a given code version;
   old local instances with another clock confuse the live status for a while.
 
