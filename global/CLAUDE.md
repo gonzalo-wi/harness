@@ -8,7 +8,7 @@ if it contradicts something here, the project wins.
 - Large tasks, refactors or design changes: plan first, code only after my approval.
 - Small, focused changes. Don't rewrite what works or add things I didn't ask for.
 - If a decision is missing, stop and ask. Don't invent requirements.
-- If the project has `specs/`, follow the `sdd` skill: the spec rules.
+- If the project has `specs/` or `changes/`, follow the `sdd` skill: the approved change and the living specs rule.
 - When done: a short summary of what changed, how you verified it, and what you decided on your own.
 
 ## Architecture
@@ -37,6 +37,9 @@ if it contradicts something here, the project wins.
 - Talk to me in Spanish (rioplatense). Everything written to files is in English: code, docs,
   specs, plans, `MEMORY.md`, `CLAUDE.md`.
 - User-facing UI text: in the product's language (usually Spanish); never mix languages on one screen.
+- Domain terms: if the project's `CLAUDE.md` says so, business terms keep the product's language in
+  code, specs and docs (e.g. `Comodato`, `Rendicion`). Everything around them stays in English.
+  Translating a term the business doesn't use creates words nobody recognizes.
 - Commits: Conventional Commits (`feat:`, `fix:`, `refactor:`, `test:`, `chore:`), one per logical change.
 - Comments only to explain the why, not the what.
 

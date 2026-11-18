@@ -50,7 +50,9 @@ if [ "$UNINSTALL" -eq 1 ]; then
   echo "Uninstalling harness from $CLAUDE_DIR"
   remove_installed
   # Legacy installs without a manifest: symlinks that point into this repo.
-  find "$CLAUDE_DIR" "$HOME/.codex" -maxdepth 2 -type l 2>/dev/null | while read -r l; do
+  # `|| true`: find exits 1 when ~/.codex doesn't exist, which under pipefail aborted the uninstall
+  # before the settings cleanup.
+  { find "$CLAUDE_DIR" "$HOME/.codex" -maxdepth 2 -type l 2>/dev/null || true; } | while read -r l; do
     case "$(readlink "$l")" in "$REPO"/*) rm "$l"; echo "  - $l" ;; esac
   done
   rm -f "$MANIFEST"
