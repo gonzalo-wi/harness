@@ -1,14 +1,17 @@
 ---
-description: SDD · New requirement - spec first, code later
+description: SDD · Requirement change - deltas first, code later
 argument-hint: <NNN-name> <requirement>
-arguments: [spec]
+arguments: [change]
 ---
-Path rule: `$spec` names a folder inside `specs/`. If it already starts with `specs/` (or is an absolute path), use it as is; never write `specs/specs/`.
+Path rule: `$change` names a folder inside `changes/` (e.g. `004-cash-closing`). If it already starts with `changes/` (or is an absolute path), use it as is; never write `changes/changes/`. If it does not exist there but `specs/$change/spec.md` does, it is a legacy spec: follow the sdd skill's Legacy layout section.
 
-New requirement for `specs/$spec/` (the first word is the folder, the rest is the requirement): $ARGUMENTS
+Requirement change: $ARGUMENTS (the first word is the change folder, the rest is the requirement).
 
 DON'T touch code. Use the sdd skill.
-1. Update `specs/$spec/spec.md`: new FR (or a change to an existing one) in EARS, its edge
-   cases and what stays out of scope.
-2. Say which parts of `plan.md` and `tasks.md` would need to change afterwards.
-3. Show me the spec diff and wait for my approval.
+- If `changes/$change/` is in progress (not archived): use the `planner` subagent to update its
+  deltas (and the proposal if the scope moves): new or changed FRs in EARS, their edge cases and
+  what stays out of scope. Then say which parts of `plan.md` and `tasks.md` would need to change.
+- If that change is already archived, or I name a capability instead of a change: behavior that is
+  live changes through a NEW change. Propose its name and continue as `/sdd-spec` would.
+
+Show me the diff and wait for my approval.

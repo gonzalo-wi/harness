@@ -18,8 +18,16 @@
 - <What's easy to get wrong and can't be deduced from reading the code>.
 
 ## SDD
-- Read the active spec (`specs/NNN-*/`) before touching code.
+- `specs/<capability>/spec.md` = what the system does today; `changes/NNN-name/` = work in progress.
+- Before touching code: read the active change (proposal, deltas, plan, tasks) and the specs of the
+  capabilities it touches. A `/feature` that changes a requirement updates its spec in the same commit.
 - Constitution: @docs/constitution.md
+
+## Language exceptions
+- <Only if needed: e.g. "Domain terms stay in Spanish in code, specs and docs: Envase, Comodato...".>
+
+## Deploy
+- <Where the deploy instructions live: `.claude/skills/deploy-*/`, `docs/runbooks/deploy.md`...>
 
 ## Memory
 - Project memory: @MEMORY.md

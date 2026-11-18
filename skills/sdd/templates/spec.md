@@ -1,22 +1,15 @@
-# Spec NNN — <Name>
+# <Capability name>
 
-Status: draft | approved | implemented
+<!-- Living spec: what the system does TODAY for this capability. Only changed by archiving a
+     change (or by a /feature commit that updates it together with the code). -->
 
-<!-- Keep the "Status:" line and the [NEEDS CLARIFICATION] markers literal: commands search for them. -->
-
-## Context and goal
-<What problem it solves and why it's worth it. One paragraph.>
-
-## Users / actors
-<Who uses it.>
-
-## User stories
-- US-1. As a <role>, I want <action> so that <benefit>.
+## Purpose
+<What this capability is for and who uses it. One paragraph.>
 
 ## Definitions
 <Only if there are terms that could be read in several ways.>
 
-## Functional requirements (EARS)
+## Requirements
 - FR-1: WHEN <event>, THE SYSTEM SHALL <response>.
 - FR-2: IF <unwanted condition>, THEN THE SYSTEM SHALL <response>.
 
@@ -26,11 +19,6 @@ Status: draft | approved | implemented
 ## Edge cases
 <Empty, duplicates, corrupt data, limits, concurrency...>
 
-## Out of scope
-<What is explicitly NOT done in this iteration.>
-
-## Completion criteria
-<E.g.: every FR with a green test + manual demo of the main flow.>
-
-## Open questions
-- [NEEDS CLARIFICATION] <question>
+## History
+<!-- One entry per archived change that touched this capability. -->
+- NNN-name (YYYY-MM-DD)

@@ -26,8 +26,11 @@ const minus = (a = [], b = []) => a.filter((x) => !b.some((y) => key(y) === key(
 const apply = remove ? minus : union;
 
 user.permissions = user.permissions || {};
-user.permissions.deny = apply(user.permissions.deny, harness.permissions?.deny);
-if (user.permissions.deny.length === 0) delete user.permissions.deny;
+for (const kind of ["allow", "ask", "deny"]) {
+  user.permissions[kind] = apply(user.permissions[kind], harness.permissions?.[kind]);
+  if (user.permissions[kind].length === 0) delete user.permissions[kind];
+}
+if (Object.keys(user.permissions).length === 0) delete user.permissions;
 
 user.hooks = user.hooks || {};
 for (const [event, entries] of Object.entries(harness.hooks || {})) {
